@@ -8,7 +8,7 @@ exports.getPosts = asyncHandler(async (req, res, next) => {
   con.connect((err) => {
     con.query(`SELECT * FROM main.object`, (err, result, fields) => {
       if (err) res.status(404).json({ success: false, error: err });
-      if (result) res.status(200).json({ success: true, data: result });
+      if (result) res.status(200).json({ data: result });
     });
   });
 });
@@ -27,7 +27,7 @@ exports.getPost = asyncHandler(async (req, res, next) => {
             success: false,
             error: `post not found with given id: ${req.params.id}`,
           });
-        else res.status(200).json({ success: true, data: result });
+        else res.status(200).json({ data: result });
       }
     );
   });

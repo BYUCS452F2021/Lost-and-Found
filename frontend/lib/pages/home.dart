@@ -6,6 +6,7 @@ import 'package:lost_and_found/pages/search.dart';
 import 'package:lost_and_found/pages/timeline.dart';
 import 'package:lost_and_found/pages/upload.dart';
 import 'package:lost_and_found/utils/constants.dart';
+import 'package:lost_and_found/utils/user_service.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
 
@@ -18,6 +19,7 @@ class _HomeState extends State<Home> {
   bool isAuth = false;
   late PageController pageController;
   int pageIndex = 0;
+  var user = null;
 
   initState() {
     super.initState();
@@ -28,7 +30,9 @@ class _HomeState extends State<Home> {
         print('User signed in!: $account');
         setState(() {
           isAuth = true;
+          user = account;
         });
+        UserService.createUser(account);
       } else {
         setState(() {
           isAuth = false;
@@ -43,7 +47,9 @@ class _HomeState extends State<Home> {
         print('User signed in!: $account');
         setState(() {
           isAuth = true;
+          user = account;
         });
+        UserService.createUser(account);
       } else {
         setState(() {
           isAuth = false;
@@ -87,7 +93,7 @@ class _HomeState extends State<Home> {
       body: PageView(
         children: <Widget>[
           Timeline(),
-          Upload(),
+          Upload(user: user),
           Search(),
           Profile(logout)
         ],
@@ -158,4 +164,5 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return isAuth ? buildAuthScreen() : buildUnAuthScreen();
   }
+
 }

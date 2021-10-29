@@ -8,7 +8,7 @@ exports.getUsers = asyncHandler(async (req, res, next) => {
   con.connect((err) => {
     con.query(`SELECT * FROM main.person`, (err, result, fields) => {
       if (err) res.status(404).json({ success: false, error: err });
-      if (result) res.status(200).json({ success: true, data: result });
+      if (result) res.status(200).json({data: result});
     });
   });
 });
@@ -27,7 +27,7 @@ exports.getUser = asyncHandler(async (req, res, next) => {
             success: false,
             error: `user not found with given id: ${req.params.id}`,
           });
-        else res.status(200).json({ success: true, data: result });
+        else res.status(200).json({data: result});
       }
     );
   });
@@ -45,7 +45,6 @@ exports.createUser = asyncHandler(async (req, res, next) => {
         if (err) res.json({ success: false, error: err });
         if (result)
           res.status(200).json({
-            success: true,
             data: {
               byu_id: req.body.byu_id,
               is_student: req.body.is_student,

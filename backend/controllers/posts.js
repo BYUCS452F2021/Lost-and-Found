@@ -22,7 +22,12 @@ exports.getPost = asyncHandler(async (req, res, next) => {
       `SELECT * FROM main.object WHERE object_id='${req.params.id}'`,
       (err, result, fields) => {
         if (err) res.status(404).json({ success: false, error: err });
-        if (result) res.status(200).json({ success: true, data: result });
+        if (!result.length)
+          res.status(404).json({
+            success: false,
+            error: `post not found with given id: ${req.params.id}`,
+          });
+        else res.status(200).json({ success: true, data: result });
       }
     );
   });

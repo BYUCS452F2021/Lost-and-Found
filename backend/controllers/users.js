@@ -22,8 +22,12 @@ exports.getUser = asyncHandler(async (req, res, next) => {
       `SELECT * FROM main.person WHERE byu_id='${req.params.id}'`,
       (err, result, fields) => {
         if (err) res.status(404).json({ success: false, error: err });
-        // if (!result) res.status(404).json({ success: false, error: 'user not found'});
-        if (result) res.status(200).json({ success: true, data: result });
+        if (!result.length)
+          res.status(404).json({
+            success: false,
+            error: `user not found with given id: ${req.params.id}`,
+          });
+        else res.status(200).json({ success: true, data: result });
       }
     );
   });

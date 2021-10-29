@@ -10,7 +10,6 @@ const app = express();
 app.use(express.json({ extended: false }));
 
 // Define Routes
-app.use('/api/items', require('./routes/api/items'));
 app.use('/api/posts', require('./routes/api/posts'));
 app.use('/api/users', require('./routes/api/users'));
 

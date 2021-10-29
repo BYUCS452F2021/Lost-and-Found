@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:lost_and_found/models/user.dart';
 import 'package:lost_and_found/pages/profile.dart';
 import 'package:lost_and_found/pages/search.dart';
 import 'package:lost_and_found/pages/timeline.dart';
@@ -19,7 +20,8 @@ class _HomeState extends State<Home> {
   bool isAuth = false;
   late PageController pageController;
   int pageIndex = 0;
-  var user = null;
+  late User user;
+  bool userExists = false;
 
   initState() {
     super.initState();
@@ -28,11 +30,10 @@ class _HomeState extends State<Home> {
     googleSignIn.onCurrentUserChanged.listen((account) {
       if (account != null) {
         print('User signed in!: $account');
+        checkUser(account);
         setState(() {
           isAuth = true;
-          user = account;
         });
-        UserService.createUser(account);
       } else {
         setState(() {
           isAuth = false;
@@ -47,9 +48,8 @@ class _HomeState extends State<Home> {
         print('User signed in!: $account');
         setState(() {
           isAuth = true;
-          user = account;
         });
-        UserService.createUser(account);
+        checkUser(account);
       } else {
         setState(() {
           isAuth = false;
@@ -64,6 +64,26 @@ class _HomeState extends State<Home> {
   void dispose() {
     pageController.dispose();
     super.dispose();
+  }
+
+  checkUser(var account) async {
+    await UserService.getUser(account.id).then((User user) => 
+      setState(() {
+        this.user = user;
+        this.userExists = true;
+      })
+    ).catchError(
+      createNewUser(account)
+    );
+  }
+
+  createNewUser(account) async {
+    await UserService.createUser(account).then((User user) =>
+      setState(() {
+        this.user = user;
+        this.userExists = true;
+      })
+    );
   }
 
   login() {

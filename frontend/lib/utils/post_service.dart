@@ -5,7 +5,7 @@ import 'package:lost_and_found/models/post.dart';
 import 'package:lost_and_found/utils/constants.dart';
 
 class PostService {
-  static createPost(user, post) async {
+  static createPost(user, description, photo ) async {
     final response = await post(
       Uri.parse(Constants.localhost()+'/api/posts'),
       headers: <String, String>{
@@ -13,12 +13,12 @@ class PostService {
       },
       body: jsonEncode(<String, String>{
         'founder_id': user.id,
-        'object_name': post?.title,
-        'type': post?.type,
-        'photo': post?.photo,
+        'object_name': 'test',
+        'type': 'test-type',
+        'photo': photo,
         'is_requested': '0',
-        'color': post?.color,
-        'description': post?.description,
+        'color': 'test-color',
+        'description': description,
         'found_date': DateTime.now().millisecondsSinceEpoch.toString(),
         'reported_date': DateTime.now().millisecondsSinceEpoch.toString(),
       }),

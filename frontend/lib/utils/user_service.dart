@@ -5,7 +5,7 @@ import 'package:lost_and_found/models/user.dart';
 import 'package:lost_and_found/utils/constants.dart';
 
 class UserService {
-  static createUser(user) async {
+  static Future<User> createUser(user) async {
     final response = await post(
       Uri.parse(Constants.localhost()+'/api/users'),
       headers: <String, String>{
@@ -16,7 +16,7 @@ class UserService {
         'name': user?.displayName,
         'email': user?.email,
         'is_student': '1',
-        // 'phone_number': user?.phoneNumber,
+        'phone_number': '801-203-0091',
       }),
     );
     if (response.statusCode != 200) {
@@ -25,6 +25,8 @@ class UserService {
       print(response.statusCode);
       throw Exception('Failed to create a user.');
     }
+
+    return serialize(response.body)[0];
   }
 
   static Future<User> getUser(String id) async {

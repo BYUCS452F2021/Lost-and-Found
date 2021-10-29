@@ -18,4 +18,6 @@ class User {
       numFound = json['num_found'],
       numRequested = json['num_requested'];
 
+  get photo => null;
+
 }

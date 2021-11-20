@@ -7,7 +7,7 @@ import 'package:lost_and_found/pages/search.dart';
 import 'package:lost_and_found/pages/timeline.dart';
 import 'package:lost_and_found/pages/upload.dart';
 import 'package:lost_and_found/utils/constants.dart';
-import 'package:lost_and_found/utils/user_service.dart';
+// import 'package:lost_and_found/utils/user_service.dart';
 
 final GoogleSignIn googleSignIn = GoogleSignIn();
 
@@ -67,23 +67,25 @@ class _HomeState extends State<Home> {
   }
 
   checkUser(var account) async {
-    await UserService.getUser(account.id).then((User user) => 
-      setState(() {
-        this.user = user;
-        this.userExists = true;
-      })
-    ).catchError(
-      createNewUser(account)
-    );
+    //TODO: use Firebase Authentication
+    // await UserService.getUser(account.id).then((User user) => 
+    //   setState(() {
+    //     this.user = user;
+    //     this.userExists = true;
+    //   })
+    // ).catchError(
+    //   createNewUser(account)
+    // );
   }
 
   createNewUser(account) async {
-    await UserService.createUser(account).then((User user) =>
-      setState(() {
-        this.user = user;
-        this.userExists = true;
-      })
-    );
+    //TODO: do we have to create a new user if we are using 
+    // await UserService.createUser(account).then((User user) =>
+    //   setState(() {
+    //     this.user = user;
+    //     this.userExists = true;
+    //   })
+    // );
   }
 
   login() {

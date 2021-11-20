@@ -15,10 +15,12 @@ class _TimelineState extends State<Timeline> {
   bool isLoading = true;
   initState() {
     super.initState();
-    PostService.getPosts().then((List<Post> items) => setState(() {
-          posts = items;
-          isLoading = false;
-        }));
+    //TODO: getPosts from DB
+
+    // PostService.getPosts().then((List<Post> items) => setState(() {
+    //       posts = items;
+    //       isLoading = false;
+    //     }));
   }
 
   @override
@@ -40,10 +42,11 @@ class _TimelineState extends State<Timeline> {
                           child: Text('Send request to server'),
                           onPressed: () {
                             setState(() {
-                              PostService.getPosts()
-                                  .then((List<Post> users) => setState(() {
-                                        print(users);
-                                      }));
+                              //TODO: get posts from DB
+                              // PostService.getPosts()
+                              //     .then((List<Post> users) => setState(() {
+                              //           print(users);
+                              //         }));
                             });
                           }),
                       Padding(

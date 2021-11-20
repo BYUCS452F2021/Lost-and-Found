@@ -115,8 +115,9 @@ class _UploadState extends State<Upload> {
     return base64Image;
   }
 
-  createPost(String imageBytes, String? location, String? description) async {    
-    await PostService.createPost(widget.user, description, imageBytes);
+  createPost(String imageBytes, String? location, String? description) async {   
+    //TODO: put a new post to DB 
+    // await PostService.createPost(widget.user, description, imageBytes);
     descriptionController.clear();
     locationController.clear();
     setState(() {
